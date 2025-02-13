@@ -1,0 +1,6 @@
+@Wafi.SampleTest_HostAddress = http://localhost:5028
+
+GET {{Wafi.SampleTest_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
