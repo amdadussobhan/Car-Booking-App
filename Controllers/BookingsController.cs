@@ -22,28 +22,32 @@ namespace Wafi.SampleTest.Controllers
         [HttpGet("Booking")]
         public async Task<IEnumerable<BookingCalendarDto>> GetCalendarBookings([FromQuery] BookingFilterDto input)
         {
+            // Retrive booking data from database
             var bookingsQuery = await _context.Bookings
-                .Include(b => b.Car) // To include car details in the result
+                .Include(b => b.Car) // include car details
                 .ToListAsync();
 
-            // Apply filters only if input is provided
+            // Apply CardId filters if provided
             if (input.CarId != Guid.Empty)
                 bookingsQuery = bookingsQuery.Where(b => b.CarId == input.CarId).ToList();
             
+            // Apply StartBookingDate filters if provided
             if (input.StartBookingDate != DateOnly.MinValue)
                 bookingsQuery = bookingsQuery.Where(b => b.BookingDate >= input.StartBookingDate).ToList();
             
+            // Apply EndBookingDate filters if provided
             if (input.EndBookingDate != DateOnly.MinValue)            
                 bookingsQuery = bookingsQuery.Where(b => b.BookingDate <= input.EndBookingDate).ToList();
             
             var calendarBookings = new List<BookingCalendarDto>();
 
+            // Generate calendar bookings
             foreach (var booking in bookingsQuery)
             {
                 var currentDate = booking.BookingDate;
-
                 while (currentDate <= (booking.EndRepeatDate ?? booking.BookingDate))
-                {
+                {   
+                    // Check if the booking date is within the filter range
                     if ((input.StartBookingDate == DateOnly.MinValue || currentDate >= input.StartBookingDate) &&
                         (input.EndBookingDate == DateOnly.MinValue || currentDate <= input.EndBookingDate))
                     {
@@ -56,6 +60,7 @@ namespace Wafi.SampleTest.Controllers
                         });
                     }
 
+                    // Move to the next booking date
                     currentDate = booking.RepeatOption switch
                     {
                         RepeatOption.Daily => currentDate.AddDays(1),
