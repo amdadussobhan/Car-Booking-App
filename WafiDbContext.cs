@@ -10,7 +10,6 @@ namespace Wafi.SampleTest
     {
         public WafiDbContext(DbContextOptions<WafiDbContext> options) : base(options) { }
         public DbSet<Booking> Bookings { get; set; }
-
         public DbSet<Car> Cars { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

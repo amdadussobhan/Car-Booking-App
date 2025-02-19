@@ -1,6 +1,6 @@
-@Wafi.SampleTest_HostAddress = http://localhost:5028
+@Wafi_SampleTest_HostAddress = http://localhost:5028
 
-GET {{Wafi.SampleTest_HostAddress}}/weatherforecast/
+GET {{Wafi_SampleTest_HostAddress}}/api/bookings
 Accept: application/json
 
 ###

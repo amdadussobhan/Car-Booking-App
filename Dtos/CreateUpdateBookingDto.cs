@@ -28,5 +28,9 @@ namespace Wafi.SampleTest.Dtos
         public DateTime RequestedOn { get; set; }
 
         public Guid CarId { get; set; }
+
+        // New field for the note/subject
+        [MaxLength(255)]
+        public string? Note { get; set; }
     }
 }
