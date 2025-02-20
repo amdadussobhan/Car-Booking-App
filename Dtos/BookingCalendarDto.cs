@@ -9,6 +9,6 @@ namespace Wafi.SampleTest.Dtos
         public TimeSpan StartTime { get; set; }
 
         public TimeSpan EndTime { get; set; }
-        public string CarModel { get; set; }
+        public string? CarModel { get; set; }
     }
 }
